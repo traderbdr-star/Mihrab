@@ -226,7 +226,7 @@
 
             <div class="rank-section">
                 <div class="guide-item" data-rank="1">
-                    <div class="lock-message">أكمل مقام الذي قبله لتفتح القفل</div>
+                    <div class="lock-message">أكمل المقام الذي قبله لتفتح القفل</div>
                     <div class="guide-blur-container">
                         <h3>2. مقام المريد (صفاء القصد)</h3>
                         <div class="guide-body">
@@ -245,7 +245,7 @@
 
             <div class="rank-section">
                 <div class="guide-item" data-rank="2">
-                    <div class="lock-message">أكمل مقام الذي قبله لتفتح القفل</div>
+                    <div class="lock-message">أكمل المقام الذي قبله لتفتح القفل</div>
                     <div class="guide-blur-container">
                         <h3>3. مقام السالك (مجاهدة الباطن)</h3>
                         <div class="guide-body">
@@ -264,7 +264,7 @@
 
             <div class="rank-section">
                 <div class="guide-item" data-rank="3">
-                    <div class="lock-message">أكمل مقام الذي قبله لتفتح القفل</div>
+                    <div class="lock-message">أكمل المقام الذي قبله لتفتح القفل</div>
                     <div class="guide-blur-container">
                         <h3>4. مقام المحب (الفناء في المحبوب)</h3>
                         <div class="guide-body">
@@ -283,7 +283,7 @@
 
             <div class="rank-section">
                 <div class="guide-item" data-rank="4">
-                    <div class="lock-message">أكمل مقام الذي قبله لتفتح القفل</div>
+                    <div class="lock-message">أكمل المقام الذي قبله لتفتح القفل</div>
                     <div class="guide-blur-container">
                         <h3>5. مقام الذاكر</h3>
                         <div class="guide-body">
@@ -302,7 +302,7 @@
 
             <div class="rank-section">
                 <div class="guide-item" data-rank="5">
-                    <div class="lock-message">أكمل مقام الذي قبله لتفتح القفل</div>
+                    <div class="lock-message">أكمل المقام الذي قبله لتفتح القفل</div>
                     <div class="guide-blur-container">
                         <h3>6. مقام القانت</h3>
                         <div class="guide-body">
@@ -321,7 +321,7 @@
 
             <div class="rank-section">
                 <div class="guide-item" data-rank="6">
-                    <div class="lock-message">أكمل مقام الذي قبله لتفتح القفل</div>
+                    <div class="lock-message">أكمل المقام الذي قبله لتفتح القفل</div>
                     <div class="guide-blur-container">
                         <h3>7. مقام الرباني</h3>
                         <div class="guide-body">
@@ -488,29 +488,30 @@
                 sq.className = 'square' + (state.filled.includes(i) ? ' filled' : ''); 
                 if (state.filled.includes(i)) sq.style.backgroundColor = r.color; 
                 
-                // إضافة النقطة عن طريق النقر المزدوج
-                sq.ondblclick = () => { if (!state.filled.includes(i)) { state.filled.push(i); state.total++; save(); renderGrid(); party(1); } };
-                
-                // خاصية المسح عن طريق الضغطة المطولة (Long Press)
+                // إضافة نقطة (Double Click)
+                sq.ondblclick = () => { 
+                    if (!state.filled.includes(i)) { 
+                        state.filled.push(i); state.total++; save(); renderGrid(); party(1); 
+                    } 
+                };
+
+                // حذف النقطة (Long Press)
                 let timer;
-                const startPress = () => {
+                const startTimer = () => {
                     timer = setTimeout(() => {
                         if (state.filled.includes(i)) {
                             state.filled = state.filled.filter(n => n !== i);
-                            state.total--;
+                            state.total = Math.max(0, state.total - 1);
                             save();
                             renderGrid();
                         }
-                    }, 800); // 800 مللي ثانية لاعتبارها ضغطة مطولة
+                    }, 800); // 800ms للضغط المطول
                 };
-                const cancelPress = () => clearTimeout(timer);
+                const cancelTimer = () => clearTimeout(timer);
 
-                sq.onmousedown = startPress;
-                sq.ontouchstart = (e) => { e.preventDefault(); startPress(); };
-                sq.onmouseup = cancelPress;
-                sq.onmouseleave = cancelPress;
-                sq.ontouchend = cancelPress;
-                
+                sq.onmousedown = sq.ontouchstart = startTimer;
+                sq.onmouseup = sq.onmouseleave = sq.ontouchend = cancelTimer;
+
                 grid.appendChild(sq); 
             }
         }
@@ -549,4 +550,18 @@
             document.getElementById('start-miladi').innerText = miladi; 
             document.getElementById('h-miladi').innerText = miladi; 
             document.getElementById('start-hijri').innerText = hijri; 
-            document.getElementById('h-hij
+            document.getElementById('h-hijri').innerText = hijri;
+        };
+
+        document.getElementById('real-start-btn').onclick = () => { 
+            document.getElementById('start-screen').style.display = 'none'; 
+            document.getElementById('main-header').style.display = 'block'; 
+            document.getElementById('dhikr-container').style.display = 'block'; 
+            document.getElementById('khatm-trigger-btn').style.display = 'none';
+            missionStars = [false, false, false, false, false, false, false];
+            updateStarDisplay();
+            initMission(1); 
+        };
+    </script>
+</body>
+</html>
