@@ -151,7 +151,7 @@
             <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان الله و بحمده، عدد خلقه و رضا نفسه، و زنة عرشه و مداد كلماته ×3</span></div>
             <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان الله، و الحمد لله، و لا إله إلا الله، و الله أكبر، عدد ما خلق، و ملء ما خلق، و عدد ما في الأرض والسماء، و ملء ما في الأرض والسماء، و عدد ما أحصى كتابه، و ملء ما أحصى كتابه، و عدد كل شيء، و ملء كل شيء.</span></div>
         </div>
-        <div class="mission-card" id="mission-7" data-time="1640">
+        <div class="mission-card" id="mission-7" data-time="1220">
             <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 حسبي الله و نعم الوكيل ×100</span></div>
             <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 لا حول و لا قوة إلا بالله ×100</span></div>
             <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 لا إله إلا الله وحده لا شريك له، له الملك و له الحمد و هو على كل شيء قدير ×10</span></div>
@@ -247,7 +247,7 @@
                 <div class="guide-item" data-rank="2">
                     <div class="lock-message">أكمل المقام الذي قبله لتفتح القفل</div>
                     <div class="guide-blur-container">
-                        <h3>3. مقام السالك (مجاهدة الباطن)</h3>
+                        <h3>2. مقام السالك (مجاهدة الباطن)</h3>
                         <div class="guide-body">
                             <p class="guide-desc">هو مقام الجد والعمل الدؤوب، حيث يصبح الورد هو الغذاء الحقيقي للروح. يشتد فيه الثبات وتظهر فيه ثمار الصبر والرضا التام عن الله في كل حال، وتذوب فيه النفس الأمارة في نور المجاهدة المستمرة والمراقبة.</p>
                             <div class="guide-rules"><span class="rule-chip">النقاط: 300</span><span class="rule-chip">التهليل: 150,000</span><span class="rule-chip">الأدنى: 1,000</span></div>
@@ -488,29 +488,26 @@
                 sq.className = 'square' + (state.filled.includes(i) ? ' filled' : ''); 
                 if (state.filled.includes(i)) sq.style.backgroundColor = r.color; 
                 
-                // إضافة نقطة (Double Click)
-                sq.ondblclick = () => { 
-                    if (!state.filled.includes(i)) { 
-                        state.filled.push(i); state.total++; save(); renderGrid(); party(1); 
-                    } 
-                };
-
-                // حذف النقطة (Long Press)
-                let timer;
-                const startTimer = () => {
-                    timer = setTimeout(() => {
+                sq.onclick = () => { if (!state.filled.includes(i)) { state.filled.push(i); state.total++; save(); renderGrid(); party(1); } };
+                
+                let longPressTimer;
+                const startPress = () => {
+                    longPressTimer = setTimeout(() => {
                         if (state.filled.includes(i)) {
                             state.filled = state.filled.filter(n => n !== i);
-                            state.total = Math.max(0, state.total - 1);
+                            state.total--;
                             save();
                             renderGrid();
                         }
-                    }, 800); // 800ms للضغط المطول
+                    }, 800);
                 };
-                const cancelTimer = () => clearTimeout(timer);
+                const endPress = () => clearTimeout(longPressTimer);
 
-                sq.onmousedown = sq.ontouchstart = startTimer;
-                sq.onmouseup = sq.onmouseleave = sq.ontouchend = cancelTimer;
+                sq.onmousedown = startPress;
+                sq.ontouchstart = (e) => { e.preventDefault(); startPress(); };
+                sq.onmouseup = endPress;
+                sq.onmouseleave = endPress;
+                sq.ontouchend = endPress;
 
                 grid.appendChild(sq); 
             }
