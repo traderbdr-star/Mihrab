@@ -2,43 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>محراب المريد - مولاي بدر</title>
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#fdfcf0">
-    
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIm1ocmFiIiwKICAic2hvcnRfbmFtZSI6ICJtaHJhYiIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZmRmY2YwIiwKICAidGhlbWVfY29sb3IiOiAiI2Q0YWYzNyIKfQ==">
-
+    <title>محراب المريد - مولاي بدر</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    
     <style>
         :root { --soft-bg: #fdfcf0; --dark-text: #2c3e50; --card-bg: #ffffff; --gold: #d4af37; --premium-gold: linear-gradient(135deg, #d4af37 0%, #b8860b 100%); --dhikr-border: 1px solid #3498db; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
-        
-        /* جعل الصفحة ثابتة مثل التطبيق */
-        html, body { 
-            height: 100%; 
-            width: 100%; 
-            margin: 0; 
-            padding: 0; 
-            overflow: hidden; 
-            position: fixed; 
-            font-family: 'Amiri', serif; 
-            background-color: var(--soft-bg); 
-            color: var(--dark-text); 
-            user-select: none; 
-        }
-
-        .app-container {
-            height: 100%;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
+        body { font-family: 'Amiri', serif; background-color: var(--soft-bg); color: var(--dark-text); margin: 0; padding: 0; user-select: none; overflow-x: hidden; }
         #start-screen { position: fixed; inset: 0; background: var(--soft-bg); z-index: 2000; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .main-title { font-family: 'Aref Ruqaa', serif; font-size: 3.5rem; font-weight: bold; margin-bottom: 30px; color: #1a1a1a; }
         .dates-wrapper { display: flex; justify-content: center; gap: 10px; margin-bottom: 12px; font-weight: bold; }
@@ -70,7 +41,6 @@
         .heart-icon { height: 28px; width: 28px; background-color: #d1d8e0; clip-path: path('M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z'); }
         .active-dhikr .heart-icon { background-color: #e74c3c; animation: pulse 1s infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-        
         #dashboard-view { display: none; flex-direction: column; align-items: center; padding: 20px 10px; text-align: center; border: 2px solid var(--gold); border-radius: 25px; margin: 220px 15px 10px; background: white; min-height: 70vh; gap: 15px; }
         .grid { display: grid; grid-template-columns: repeat(10, 24px); gap: 5px; direction: ltr; margin: 10px 0; }
         .square { width: 24px; height: 24px; border: 1px solid #333; background: #fff; cursor: pointer; transition: background 0.2s; }
@@ -79,18 +49,22 @@
         .tehlil-stat { font-size: 0.95rem; margin: 5px 0; color: #555; font-weight: bold; }
         #daily-progress-bar { height: 8px; border-radius: 4px; transition: width 0.5s; margin-top: 8px; background: #eee; overflow: hidden; }
         .progress-inner { height: 100%; border-radius: 4px; transition: width 0.5s; }
-        
         #khatm-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 4000; justify-content: center; align-items: center; padding: 15px; }
         .khatm-content { background: #fff; border: 5px double var(--gold); border-radius: 25px; padding: 30px 20px; max-width: 650px; width: 100%; max-height: 90vh; overflow-y: auto; text-align: center; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
         .khatm-title { font-family: 'Aref Ruqaa', serif; font-size: 2.2rem; color: #b8860b; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
         .khatm-text { font-size: 1.4rem; line-height: 2.2; text-align: justify; color: #222; margin-bottom: 25px; }
-        
         #guide-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000; justify-content: center; align-items: center; padding: 5px; }
         .guide-content { background: #1a1a1a; background-image: url('https://www.transparenttextures.com/patterns/black-paper.png'); color: #e0e0e0; padding: 25px 20px; border-radius: 30px; max-height: 95vh; overflow-y: auto; width: 100%; max-width: 800px; text-align: right; border: 3px solid #d4af37; position: relative; }
         .guide-header-top { font-family: 'Aref Ruqaa', serif; color: #d4af37; text-align: center; font-size: 2.5rem; border-bottom: 2px double #d4af37; margin-bottom: 30px; padding-bottom: 10px; }
         .rank-section { position: relative; margin-bottom: 30px; }
         .guide-item { padding: 20px; background: rgba(255,255,255,0.05); border-radius: 20px; border: 1px solid #333; transition: all 0.3s; position: relative; overflow: hidden; }
+        .guide-item.locked .guide-blur-container { filter: blur(8px); pointer-events: none; opacity: 0.6; }
         .guide-item h3 { font-family: 'Aref Ruqaa', serif; color: #fdfcf0; font-size: 2rem; margin-top: 0; border-right: 10px solid #d4af37; padding-right: 15px; display: flex; align-items: center; gap: 10px; }
+        .guide-item.locked { border: 1px solid #3498db; }
+        .guide-item.locked h3 { border-right-color: #3498db; }
+        .guide-item.locked h3::after { content: " 🔒"; font-size: 1.2rem; }
+        .lock-message { display: none; position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%); width: 85%; text-align: center; background: rgba(0,0,0,0.85); color: #d4af37; padding: 12px; border-radius: 12px; border: 2px solid #3498db; z-index: 100; font-weight: bold; font-size: 1.2rem; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
+        .guide-item.locked .lock-message { display: block; }
         .guide-desc { font-size: 1.25rem; line-height: 1.8; color: #ccc; margin: 15px 0; text-align: justify; }
         .guide-rules { display: flex; flex-wrap: wrap; gap: 10px; background: #000; padding: 15px; border-radius: 12px; margin: 15px 0; border: 1px solid #d4af37; }
         .rule-chip { background: #333; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; color: #d4af37; border: 1px solid #555; }
@@ -98,7 +72,6 @@
         .pos-list { color: #81c784; font-size: 1.15rem; padding: 10px; line-height: 1.7; background: rgba(129, 199, 132, 0.05); border-radius: 10px; margin-top: 5px; }
         .neg-list { color: #e57373; font-size: 1.15rem; padding: 10px; line-height: 1.7; background: rgba(229, 115, 115, 0.05); border-radius: 10px; margin-top: 5px; }
         .essential-box { color: #bbdefb; font-size: 1.15rem; padding: 10px; line-height: 1.7; background: rgba(187, 222, 251, 0.05); border-radius: 10px; margin-top: 5px; border: 1px dashed #64b5f6; }
-        
         .close-guide-btn { position: sticky; bottom: 0; left: 50%; transform: translateX(-50%); background: var(--premium-gold); color: white; border: none; padding: 15px 60px; border-radius: 40px; font-size: 1.3rem; margin-top: 20px; cursor: pointer; font-family: 'Aref Ruqaa', serif; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 1000; }
         .mini-start-btn { padding: 12px 40px; font-size: 1.2rem; background: var(--premium-gold); color: white; border: none; border-radius: 30px; cursor: pointer; font-family: 'Amiri', serif; }
         .khatm-close-btn { background: var(--gold); color: white; border: none; padding: 12px 30px; border-radius: 20px; cursor: pointer; font-size: 1.1rem; margin-top: 15px; }
@@ -106,234 +79,266 @@
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <audio id="alarm-snd"><source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg"></audio>
+    <audio id="alarm-snd"><source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg"></audio>
 
-        <div id="start-screen">
-            <div class="main-title">محراب المريد</div>
-            <div class="dates-wrapper">
-                <div class="date-frame" id="start-miladi"></div>
-                <div class="date-frame" id="start-hijri" onclick="showDashboard()"></div>
-            </div>
-            <button id="real-start-btn" class="mini-start-btn">بسم الله نبتدئ</button>
+    <div id="start-screen">
+        <div class="main-title">محراب المريد</div>
+        <div class="dates-wrapper">
+            <div class="date-frame" id="start-miladi"></div>
+            <div class="date-frame" id="start-hijri" onclick="showDashboard()"></div>
         </div>
+        <button id="real-start-btn" class="mini-start-btn">بسم الله نبتدئ</button>
+    </div>
 
-        <div class="sticky-header" id="main-header" style="display:none;">
-            <div class="dates-wrapper">
-                <div class="date-frame" id="h-miladi" onclick="skipMission(-1)"></div>
-                <div class="date-frame" id="h-hijri" onclick="skipMission(1)"></div>
-            </div>
-            <div class="dots-container">
-                <div class="mission-dot dot-1" id="dot-1"></div>
-                <div class="mission-dot dot-2" id="dot-2"></div>
-                <div class="mission-dot dot-3" id="dot-3"></div>
-                <div class="mission-dot dot-4" id="dot-4"></div>
-                <div class="mission-dot dot-5" id="dot-5"></div>
-                <div class="mission-dot dot-6" id="dot-6"></div>
-                <div class="mission-dot dot-7" id="dot-7"></div>
-            </div>
-            <div id="star-display"></div>
-            <div id="mission-timer" class="timer-val">00:00</div>
+    <div class="sticky-header" id="main-header" style="display:none;">
+        <div class="dates-wrapper">
+            <div class="date-frame" id="h-miladi" onclick="skipMission(-1)"></div>
+            <div class="date-frame" id="h-hijri" onclick="skipMission(1)"></div>
         </div>
-
-        <div class="container" id="dhikr-container" style="display:none; text-align: center;">
-            <div class="mission-card active" id="mission-1" data-time="82">
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">بسم الله الرحمن الرحيم و صل اللهم و سلم و بارك على سيدنا محمد أشرف الأنبياء و المرسلين و على آله و صحبه إلى أن ترث اللهم الأرض و من عليها و أنت خير الوارثين.</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 أعوذ بكلمات الله التامة من كل شيطان و هامة و من كل عين لامة ×3</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 أعوذ بكلمات الله التامات من شر ما خلق ×3</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 «رب أعوذ بك من همزات الشياطين و أعوذ بك رب أن يحضرون» ×3</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">رب أعوذ بك من شر نفسي و من شر الشيطان و شركه و همزه و نفخه و وسوسته و نفثه، و أعوذ بك من كل من و ما يحجبني و يشغلني عنك يا الله.</span></div>
-            </div>
-            <div class="mission-card" id="mission-2" data-time="60">
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 بسم الله الذي لا يضر مع اسمه شيء في الأرض و لا في السماء و هو السميع العليم×3 (من قالها ثلاثًا إذا أصبح وثلاثًا إذا أمسى، لم يضرَّه شيء)</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 بسم الله الرحمن الرحيم ×21</span></div>
-            </div>
-            <div class="mission-card" id="mission-3" data-time="205">
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 أستغفر الله ×100</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم و أتوب إليه. ×3</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 لا إله إلا أنت سبحانك إني كنت من الظالمين ×3</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سيد الإستغفار: اللهم أنت ربي لا إله إلا أنت خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت.</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 اللهم إني أسألك يا الله، الواحد الأحد الصمد، الذي لم يلد ولم يُولد، ولم يكن له كفوًا أحد - أن تغفر لي ذنوبي؛ إنك أنت الغفور الرحيم.</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 {رب اغفر و ارحم و أنت خير الراحمين}</span></div>
-            </div>
-            <div class="mission-card" id="mission-4" data-time="174">
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 حسبي الله لا إله إلا هو عليه توكلت و هو رب العرش العظيم ×7</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 «إنا فتحنا لك فتحا مبينا» ×21</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 الفاتحة</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 بِسْمِ اللهِ أَرْقِي نَفْسِي، مِنْ كُلِّ شَيْءٍ يُؤْذِينِي، مِنْ شَرِّ كُلِّ نَفْسٍ أَوْ عَيْنِ حَاسِدٍ، اللهُ يَشْفِينِي، بِسْمِ اللهِ أَرْقِي نَفْسِي. ×3</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سلام قولا من رب رحيم ×19</span></div>
-            </div>
-            <div class="mission-card" id="mission-5" data-time="235">
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 «الله لطيف بعباده يرزق من يشاء و هو القوي العزيز» يا لطيف ×129</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 [اللهم يا من لطفت بخلق السماوات و الأرض، و لطفت بالأجنة في بطون أمهاتها، الطف بنا في قضائك و قدرك، لطفا يليق بكرمك يا أرحم الراحمين. اللهم بسر اسمك اللطيف أدخلنا دائرة اللطف و الحفظ و النجاة و الأمان يا لطيف، اللهم يا لطيف بسر اسمك اللطيف و جاه نبيك الشريف الطف بنا لطفا خفيا من دقائق لطفك الخفي، الذي إذا لطفت به لعبد كفي]</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 [اللهم لا فرج إلا فرجك، ولا لطف إلا لطفك، يا من وسع لطفه أهل السماوات و الأرض، أسألك بلطفك أن تخفيني عن أعين الظلمة و المتجبرين، و مردة الجن و الشياطين. اللهم بسر اسمك اللطيف الطف بي في الأمور كلها و اسلك بي مسالك النجاة، و كن لي اللهم يا لطيف لطيفا و وليا و معينا و نصيرا في جميع الأقوال و الأحوال و الأفعال، و ارزقني من الخير كله عاجله و آجله، و اصرف عني اللهم الفقر و الشر كله عاجله و آجله يا لطيف. اللهم يا ذا الجلال و الإكرام بحرمة وجهك الكريم، و عظمة ملكك العظيم، و سر اسمك اللطيف سخرلي عبدك خادم هذا الإسم الشريف، يكون لي عونا على ما أريد من أمور الدنيا و الآخرة. اللهم إني أسألك بأفضل مسألتك، و بأحب أسمائئك إليك، و أكرمها عليك، و بما مننت علينا بسيدنا محمد نبينا صل اللهم عليه و سلم، فأسألك بجلال و جهك و نور عظمتك، و بسر اسمك اللطيف أن تكشف لي شموع الذهب و و تبينها لي قبل أوانها فأراها عيانا بيانا يا لطيف يا مبين، و افتح لي اللهم في تداوله فتحا عظيما، و ارزقني فيه مالا كثيرا غزيرا لا انتهاء له و لا انقضاء. و سخر لي اللهم جميع خلقك و توفني مؤمنا مسلما محسنا، يا من قال و قوله الحق «ادعوني أستجب لكم» دعوتك اللهم ربي و أنا المستجير بك الفقير إليك، فاستجب مني رحمة، و أعطني سؤلي جودا و كرما و لطفا، و أنت الرحمان الرحيم، اللطيف بكل العباد، إنك لا تخلف الميعاد]</span></div>
-            </div>
-            <div class="mission-card" id="mission-6" data-time="845">
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 الصلاة اللانهائية </span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 لا إله إلا الله ×100</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 لا إله إلا الله، دائمة بدوام ملك الله، عدد ما في علم الله و رضى نفسه، و زنة عرش الله و مداد كلماته. ×3</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان الله و بحمده ×100</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان الله و بحمده سبحان الله العظيم ×50</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان من يقول للشيء كن فيكون ×50</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان ذي الملك و الملكوت ×50</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان الله و بحمده، عدد خلقه و رضا نفسه، و زنة عرشه و مداد كلماته ×3</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان الله، و الحمد لله، و لا إله إلا الله، و الله أكبر، عدد ما خلق، و ملء ما خلق، و عدد ما في الأرض والسماء، و ملء ما في الأرض والسماء، و عدد ما أحصى كتابه، و ملء ما أحصى كتابه، و عدد كل شيء، و ملء كل شيء.</span></div>
-            </div>
-            <div class="mission-card" id="mission-7" data-time="1640">
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 حسبي الله و نعم الوكيل ×100</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 لا حول و لا قوة إلا بالله ×100</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 لا إله إلا الله وحده لا شريك له، له الملك و له الحمد و هو على كل شيء قدير ×10</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 يا ذا الجلال و الإكرام ×50</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 اللهم إني أسألك أنك أنت الله، لا إله إلا أنت وحدك لا شريك لك، و أنت على كل شيء قدير، و أتوسل إليك بأسمائك الحسنى: الله، الملك، الصمد. المانع، اللطيف، العفو. الحي، القيوم، مالك الملك ذو الجلال و الإكرام، أن تلبسني لباس حفظ يكون لي برحمتك ذرعا و واقيا و حجابا من كل أذى و ضرر و شر، و من كل طوارق الليل و النهار إلا طارقا يطرق بخير، في هذه الساعة و كل ساعة إلى قيام الساعة برحمتك اللهم يا أرحم الراحمين.</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 اللهم إني أستخيرك، و أستقدرك بقدرتك و أسألك من فضلك، إنك على كل شيء قدير و أنت علام الغيوب، أسألك اللهم إن كان مايكون لي في هذا النهار و هذه الليلة؛ خيرا لي فاقدره لي، و يسره لي، ثم بارك لي فيه و أعني عليه، و ما كان شرّا لي فاصرفه عني، و اصرفني عنه، و اقدر لي الخير حيث كان، ثم رضني به. برحمتك اللهم يا أرحم الراحمين.</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 يا حي يا قيوم برحمتك أستغيث، أصلح لي شأني كله و لا تكلني إلى نفسي أو إلى أحد من خلقك طرفة عين.</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سورة الإخلاص ×3</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 القرآن ـ ثمن</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 الحمد لله ×100</span></div>
-                <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 «رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ اَهْدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةًۖ اِنَّكَ أَنتَ اَ۬لْوهَّابُۖ»</span></div>
-            </div>
-            <button id="khatm-trigger-btn" onclick="showKhatm()">أتممت الورد (دعاء الختم)</button>
+        <div class="dots-container">
+            <div class="mission-dot dot-1" id="dot-1"></div>
+            <div class="mission-dot dot-2" id="dot-2"></div>
+            <div class="mission-dot dot-3" id="dot-3"></div>
+            <div class="mission-dot dot-4" id="dot-4"></div>
+            <div class="mission-dot dot-5" id="dot-5"></div>
+            <div class="mission-dot dot-6" id="dot-6"></div>
+            <div class="mission-dot dot-7" id="dot-7"></div>
         </div>
+        <div id="star-display"></div>
+        <div id="mission-timer" class="timer-val">00:00</div>
+    </div>
 
-        <div id="khatm-modal">
-            <div class="khatm-content">
-                <div class="khatm-title">🌼 دعاء الختم</div>
-                <div class="khatm-text">
-                    اللهم إني أسألك أن تصلي و تسلم و تبارك على سيدنا محمد في كل وقت و حين، إلى أن ترث اللهم الأرض و من عليها و أنت خير الوارثين. <br><br>
-                    اللهم إني أسألك حسن الخلقِ و الحلمِ و الأدبِ و اللينْ، و الصدقَ و الإخلاصَ و العفو و العافية و اليقينْ، و التوفيق و الفتح المبينَ في أمور الدنيا و الدينِ بجاه سيدنا محمد أشرف الأنبياء و المرسلين. و أعوذ بك من الشرك و الكبر و الرياء، و العجز و الفقر و الفاقة و المراء، و سوء الأخلاق و الغلظة و الفظاظة و النفاق. اللهم ارزقني و والدي و أخواتي من الخير كله عاجله و آجله، و اصرف عنا برحمتك يا أرحم الراحمين الشر كله عاجله و آجله، اللهم إنا نسألك من فجاءة الخير، و نعوذ بك من فجاءة الشر و أهل الشقاوة و الشر و الخداع و المكر.<br><br>
-                    اللهم يا قهار اقهر جميع أعدائي وحسادي فيمتنعوا عني بقهرك يا قهار، و كلُّ من أرادني بسوء فاحفظني اللهم من شره، و رد كيده في نحره، واشغله عني في لحظته بالمردة و بالطوارق و بنفسه، و أوبقه من أخمص قدميه إلى رأسه.<br><br>
-                    اللهم إني أستشفع إليك بسيدنا محمد إذ هو أوجه الشفعاء إليك، و أُقْسِمُ به عليك إذ هو أعظم من أقسم بحقه عليك، و أتوسل به إليك إذ هو أقرب الوسائل إليك، يا رب بجاه نبيك المصطفى و قدره عندك و مكانته لديك فرج عني ما أنا فيه، و لا تجعل عيشي كدا، و هب لي الرزق السهل الذي لا مشقة فيه و لا تعب، و يسر لي أموري كلها و اقض لي حوائجي جميعها و ارزقني محبتك و اجعل لي في السماوات و الأرض القبول، و سخر لي جميع خلقك، و تقبل مني برحمتك و عفوك و جودك و كرمك اللهم يا أكرم الأكرمين.<br><br>
-                    و صل اللهم و سلم و بارك على سيدنا محمد في كل وقت و حين إلى أن ترث اللهم الأرض و من عليها و أنت خير الوارثين.<br><br>
-                    سبحان ربك رب العزة عما يصفون و سلام على المرسلين و الحمد لله رب العالمين.
-                </div>
-                <button class="khatm-close-btn" onclick="closeKhatm()">تقبل الله منكم</button>
+    <div class="container" id="dhikr-container" style="display:none; text-align: center;">
+        <div class="mission-card active" id="mission-1" data-time="82">
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">بسم الله الرحمن الرحيم و صل اللهم و سلم و بارك على سيدنا محمد أشرف الأنبياء و المرسلين و على آله و صحبه إلى أن ترث اللهم الأرض و من عليها و أنت خير الوارثين.</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 أعوذ بكلمات الله التامة من كل شيطان و هامة و من كل عين لامة ×3</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 أعوذ بكلمات الله التامات من شر ما خلق ×3</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 «رب أعوذ بك من همزات الشياطين و أعوذ بك رب أن يحضرون» ×3</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">رب أعوذ بك من شر نفسي و من شر الشيطان و شركه و همزه و نفخه و وسوسته و نفثه، و أعوذ بك من كل من و ما يحجبني و يشغلني عنك يا الله.</span></div>
+        </div>
+        <div class="mission-card" id="mission-2" data-time="60">
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 بسم الله الذي لا يضر مع اسمه شيء في الأرض و لا في السماء و هو السميع العليم×3 (من قالها ثلاثًا إذا أصبح وثلاثًا إذا أمسى، لم يضرَّه شيء)</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 بسم الله الرحمن الرحيم ×21</span></div>
+        </div>
+        <div class="mission-card" id="mission-3" data-time="205">
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 أستغفر الله ×100</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم و أتوب إليه. ×3</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 لا إله إلا أنت سبحانك إني كنت من الظالمين ×3</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سيد الإستغفار: اللهم أنت ربي لا إله إلا أنت خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت.</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 اللهم إني أسألك يا الله، الواحد الأحد الصمد، الذي لم يلد ولم يُولد، ولم يكن له كفوًا أحد - أن تغفر لي ذنوبي؛ إنك أنت الغفور الرحيم.</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 {رب اغفر و ارحم و أنت خير الراحمين}</span></div>
+        </div>
+        <div class="mission-card" id="mission-4" data-time="174">
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 حسبي الله لا إله إلا هو عليه توكلت و هو رب العرش العظيم ×7</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 «إنا فتحنا لك فتحا مبينا» ×21</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 الفاتحة</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 بِسْمِ اللهِ أَرْقِي نَفْسِي، مِنْ كُلِّ شَيْءٍ يُؤْذِينِي، مِنْ شَرِّ كُلِّ نَفْسٍ أَوْ عَيْنِ حَاسِدٍ، اللهُ يَشْفِينِي، بِسْمِ اللهِ أَرْقِي نَفْسِي. ×3</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سلام قولا من رب رحيم ×19</span></div>
+        </div>
+        <div class="mission-card" id="mission-5" data-time="235">
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 «الله لطيف بعباده يرزق من يشاء و هو القوي العزيز» يا لطيف ×129</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 [اللهم يا من لطفت بخلق السماوات و الأرض، و لطفت بالأجنة في بطون أمهاتها، الطف بنا في قضائك و قدرك، لطفا يليق بكرمك يا أرحم الراحمين. اللهم بسر اسمك اللطيف أدخلنا دائرة اللطف و الحفظ و النجاة و الأمان يا لطيف، اللهم يا لطيف بسر اسمك اللطيف و جاه نبيك الشريف الطف بنا لطفا خفيا من دقائق لطفك الخفي، الذي إذا لطفت به لعبد كفي]</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 [اللهم لا فرج إلا فرجك، ولا لطف إلا لطفك، يا من وسع لطفه أهل السماوات و الأرض، أسألك بلطفك أن تخفيني عن أعين الظلمة و المتجبرين، و مردة الجن و الشياطين. اللهم بسر اسمك اللطيف الطف بي في الأمور كلها و اسلك بي مسالك النجاة، و كن لي اللهم يا لطيف لطيفا و وليا و معينا و نصيرا في جميع الأقوال و الأحوال و الأفعال، و ارزقني من الخير كله عاجله و آجله، و اصرف عني اللهم الفقر و الشر كله عاجله و آجله يا لطيف. اللهم يا ذا الجلال و الإكرام بحرمة وجهك الكريم، و عظمة ملكك العظيم، و سر اسمك اللطيف سخرلي عبدك خادم هذا الإسم الشريف، يكون لي عونا على ما أريد من أمور الدنيا و الآخرة. اللهم إني أسألك بأفضل مسألتك، و بأحب أسمائئك إليك، و أكرمها عليك، و بما مننت علينا بسيدنا محمد نبينا صل اللهم عليه و سلم، فأسألك بجلال و جهك و نور عظمتك، و بسر اسمك اللطيف أن تكشف لي شموع الذهب و و تبينها لي قبل أوانها فأراها عيانا بيانا يا لطيف يا مبين، و افتح لي اللهم في تداوله فتحا عظيما، و ارزقني فيه مالا كثيرا غزيرا لا انتهاء له و لا انقضاء. و سخر لي اللهم جميع خلقك و توفني مؤمنا مسلما محسنا، يا من قال و قوله الحق «ادعوني أستجب لكم» دعوتك اللهم ربي و أنا المستجير بك الفقير إليك، فاستجب مني رحمة، و أعطني سؤلي جودا و كرما و لطفا، و أنت الرحمان الرحيم، اللطيف بكل العباد، إنك لا تخلف الميعاد]</span></div>
+        </div>
+        <div class="mission-card" id="mission-6" data-time="845">
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 الصلاة اللانهائية </span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 لا إله إلا الله ×100</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 لا إله إلا الله، دائمة بدوام ملك الله، عدد ما في علم الله و رضى نفسه، و زنة عرش الله و مداد كلماته. ×3</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان الله و بحمده ×100</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان الله و بحمده سبحان الله العظيم ×50</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان من يقول للشيء كن فيكون ×50</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان ذي الملك و الملكوت ×50</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان الله و بحمده، عدد خلقه و رضا نفسه، و زنة عرشه و مداد كلماته ×3</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سبحان الله، و الحمد لله، و لا إله إلا الله، و الله أكبر، عدد ما خلق، و ملء ما خلق، و عدد ما في الأرض والسماء، و ملء ما في الأرض والسماء، و عدد ما أحصى كتابه، و ملء ما أحصى كتابه، و عدد كل شيء، و ملء كل شيء.</span></div>
+        </div>
+        <div class="mission-card" id="mission-7" data-time="1640">
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 حسبي الله و نعم الوكيل ×100</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 لا حول و لا قوة إلا بالله ×100</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 لا إله إلا الله وحده لا شريك له، له الملك و له الحمد و هو على كل شيء قدير ×10</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 يا ذا الجلال و الإكرام ×50</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 اللهم إني أسألك أنك أنت الله، لا إله إلا أنت وحدك لا شريك لك، و أنت على كل شيء قدير، و أتوسل إليك بأسمائك الحسنى: الله، الملك، الصمد. المانع، اللطيف، العفو. الحي، القيوم، مالك الملك ذو الجلال و الإكرام، أن تلبسني لباس حفظ يكون لي برحمتك ذرعا و واقيا و حجابا من كل أذى و ضرر و شر، و من كل طوارق الليل و النهار إلا طارقا يطرق بخير، في هذه الساعة و كل ساعة إلى قيام الساعة برحمتك اللهم يا أرحم الراحمين.</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 اللهم إني أستخيرك، و أستقدرك بقدرتك و أسألك من فضلك، إنك على كل شيء قدير و أنت علام الغيوب، أسألك اللهم إن كان مايكون لي في هذا النهار و هذه الليلة؛ خيرا لي فاقدره لي، و يسره لي، ثم بارك لي فيه و أعني عليه، و ما كان شرّا لي فاصرفه عني، و اصرفني عنه، و اقدر لي الخير حيث كان، ثم رضني به. برحمتك اللهم يا أرحم الراحمين.</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 يا حي يا قيوم برحمتك أستغيث، أصلح لي شأني كله و لا تكلني إلى نفسي أو إلى أحد من خلقك طرفة عين.</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 سورة الإخلاص ×3</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 القرآن ـ ثمن</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 الحمد لله ×100</span></div>
+            <div class="dhikr-item"><div class="heart-btn" onclick="toggleHeart(this)"><div class="heart-icon"></div></div><span class="dhikr-text">🌼 «رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ اَهْدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةًۖ اِنَّكَ أَنتَ اَ۬لْوهَّابُۖ»</span></div>
+        </div>
+        <button id="khatm-trigger-btn" onclick="showKhatm()">أتممت الورد (دعاء الختم)</button>
+    </div>
+
+    <div id="khatm-modal">
+        <div class="khatm-content">
+            <div class="khatm-title">🌼 دعاء الختم</div>
+            <div class="khatm-text">
+                اللهم إني أسألك أن تصلي و تسلم و تبارك على سيدنا محمد في كل وقت و حين، إلى أن ترث اللهم الأرض و من عليها و أنت خير الوارثين. <br><br>
+                اللهم إني أسألك حسن الخلقِ و الحلمِ و الأدبِ و اللينْ، و الصدقَ و الإخلاصَ و العفو و العافية و اليقينْ، و التوفيق و الفتح المبينَ في أمور الدنيا و الدينِ بجاه سيدنا محمد أشرف الأنبياء و المرسلين. و أعوذ بك من الشرك و الكبر و الرياء، و العجز و الفقر و الفاقة و المراء، و سوء الأخلاق و الغلظة و الفظاظة و النفاق. اللهم ارزقني و والدي و أخواتي من الخير كله عاجله و آجله، و اصرف عنا برحمتك يا أرحم الراحمين الشر كله عاجله و آجله، اللهم إنا نسألك من فجاءة الخير، و نعوذ بك من فجاءة الشر و أهل الشقاوة و الشر و الخداع و المكر.<br><br>
+                اللهم يا قهار اقهر جميع أعدائي وحسادي فيمتنعوا عني بقهرك يا قهار، و كلُّ من أرادني بسوء فاحفظني اللهم من شره، و رد كيده في نحره، واشغله عني في لحظته بالمردة و بالطوارق و بنفسه، و أوبقه من أخمص قدميه إلى رأسه.<br><br>
+                اللهم إني أستشفع إليك بسيدنا محمد إذ هو أوجه الشفعاء إليك، و أُقْسِمُ به عليك إذ هو أعظم من أقسم بحقه عليك، و أتوسل به إليك إذ هو أقرب الوسائل إليك، يا رب بجاه نبيك المصطفى و قدره عندك و مكانته لديك فرج عني ما أنا فيه، و لا تجعل عيشي كدا، و هب لي الرزق السهل الذي لا مشقة فيه و لا تعب، و يسر لي أموري كلها و اقض لي حوائجي جميعها و ارزقني محبتك و اجعل لي في السماوات و الأرض القبول، و سخر لي جميع خلقك، و تقبل مني برحمتك و عفوك و جودك و كرمك اللهم يا أكرم الأكرمين.<br><br>
+                و صل اللهم و سلم و بارك على سيدنا محمد في كل وقت و حين إلى أن ترث اللهم الأرض و من عليها و أنت خير الوارثين.<br><br>
+                سبحان ربك رب العزة عما يصفون و سلام على المرسلين و الحمد لله رب العالمين.
+            </div>
+            <button class="khatm-close-btn" onclick="closeKhatm()">تقبل الله منكم</button>
+        </div>
+    </div>
+
+    <div id="dashboard-view">
+        <div style="border:2px solid black; padding:5px 20px; border-radius:30px; display:flex; align-items:center; gap:10px;">
+            <div id="rank-num" style="width:28px; height:28px; border-radius:50%; border:1px solid black; display:flex; align-items:center; justify-content:center; font-weight:bold;">1</div>
+            <span id="rank-name" style="font-weight:bold;">مبتدئ</span>
+        </div>
+        <p>النقط: <span id="total-pts">0</span> / <span id="target-pts">40</span></p>
+        <div class="grid" id="grid-container"></div>
+        <div class="tehlil-box">
+            <div class="tehlil-stat">التهليل المطلوب: <span id="target-tehlil">10,000</span></div>
+            <div class="tehlil-stat" style="color:#d4af37;">التهليل التراكمي: <span id="accumulated-tehlil">0</span></div>
+            <div id="daily-progress-bar"><div class="progress-inner" id="prog-inner"></div></div>
+            <div style="margin-top:12px;">
+                <input type="number" id="tehlil-input" style="width:90px; padding:8px; border-radius:10px; border:1px solid #ccc;">
+                <button onclick="addManualTehlil()" style="background:var(--gold); color:white; border:none; padding:8px 15px; border-radius:10px;">إضافة</button>
             </div>
         </div>
+        <button onclick="toggleGuide(true)" class="mini-start-btn" style="font-size:1rem; padding:10px 30px; margin-top:10px;">دليل المقامات</button>
+        <button onclick="location.reload()" style="color:blue; background:none; border:none; cursor:pointer; margin-top:10px;">العودة للبداية</button>
+    </div>
 
-        <div id="dashboard-view">
-            <div style="border:2px solid black; padding:5px 20px; border-radius:30px; display:flex; align-items:center; gap:10px;">
-                <div id="rank-num" style="width:28px; height:28px; border-radius:50%; border:1px solid black; display:flex; align-items:center; justify-content:center; font-weight:bold;">1</div>
-                <span id="rank-name" style="font-weight:bold;">مبتدئ</span>
-            </div>
-            <p>النقط: <span id="total-pts">0</span> / <span id="target-pts">40</span></p>
-            <div class="grid" id="grid-container"></div>
-            <div class="tehlil-box">
-                <div class="tehlil-stat">التهليل المطلوب: <span id="target-tehlil">10,000</span></div>
-                <div class="tehlil-stat" style="color:#d4af37;">التهليل التراكمي: <span id="accumulated-tehlil">0</span></div>
-                <div id="daily-progress-bar"><div class="progress-inner" id="prog-inner"></div></div>
-                <div style="margin-top:12px;">
-                    <input type="number" id="tehlil-input" style="width:90px; padding:8px; border-radius:10px; border:1px solid #ccc;">
-                    <button onclick="addManualTehlil()" style="background:var(--gold); color:white; border:none; padding:8px 15px; border-radius:10px;">إضافة</button>
-                </div>
-            </div>
-            <button onclick="toggleGuide(true)" class="mini-start-btn" style="font-size:1rem; padding:10px 30px; margin-top:10px;">دليل المقامات</button>
-            <button onclick="location.reload()" style="color:blue; background:none; border:none; cursor:pointer; margin-top:10px;">العودة للبداية</button>
-        </div>
-
-        <div id="guide-modal">
-            <div class="guide-content">
-                <div class="guide-header-top">مراتب السلوك ومقامات اليقين</div>
-                
-                <div class="rank-section">
-                    <div class="guide-item">
+    <div id="guide-modal">
+        <div class="guide-content">
+            <div class="guide-header-top">مراتب السلوك ومقامات اليقين</div>
+            
+            <div class="rank-section">
+                <div class="guide-item" data-rank="0">
+                    <div class="guide-blur-container">
                         <h3>1. مقام المبتدئ (عتبة الإرادة)</h3>
-                        <p class="guide-desc">هو مقام من وضع قدمه أول الطريق، فيسعى لضبط جوارحه الظاهرة وبناء جسور من الأنوار في قلبه من خلال المداومة على الورد اليومي. هو مقام التوبة النصوح والانقطاع عن فضول الكلام والنظر، والحرص التام على الفرائض.</p>
-                        <div class="guide-rules"><span class="rule-chip">النقاط: 40</span><span class="rule-chip">التهليل: 10,000</span><span class="rule-chip">الأدنى: 500</span></div>
-                        <span class="guide-section-title">📘 عبادات ضرورية:</span>
-                        <div class="essential-box">الإستغفار 100، الصلاة على النبي 100، النوافل الشفع و الوتر، القرآن حزب واحد.</div>
-                        <span class="guide-section-title">✨ موجبات الترقي:</span>
-                        <div class="pos-list">الصدق في الطلب، بر الوالدين، كثرة الوضوء، والمحافظة الصارمة على الصلاة في وقتها.</div>
-                        <span class="guide-section-title">⚠️ موانع الترقي:</span>
-                        <div class="neg-list">التسويف، فضول الكلام، كثرة النوم، والغيبة والنميمة.</div>
+                        <div class="guide-body">
+                            <p class="guide-desc">هو مقام من وضع قدمه أول الطريق، فيسعى لضبط جوارحه الظاهرة وبناء جسور من الأنوار في قلبه من خلال المداومة على الورد اليومي. هو مقام التوبة النصوح والانقطاع عن فضول الكلام والنظر، والحرص التام على الفرائض.</p>
+                            <div class="guide-rules"><span class="rule-chip">النقاط: 40</span><span class="rule-chip">التهليل: 10,000</span><span class="rule-chip">الأدنى: 500</span></div>
+                            <span class="guide-section-title">📘 عبادات ضرورية:</span>
+                            <div class="essential-box">الإستغفار 100، الصلاة على النبي 100، النوافل الشفع و الوتر، القرآن حزب واحد.</div>
+                            <span class="guide-section-title">✨ موجبات الترقي:</span>
+                            <div class="pos-list">الصدق في الطلب، بر الوالدين، كثرة الوضوء، والمحافظة الصارمة على الصلاة في وقتها.</div>
+                            <span class="guide-section-title">⚠️ موانع الترقي:</span>
+                            <div class="neg-list">التسويف، فضول الكلام، كثرة النوم، والغيبة والنميمة.</div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="rank-section">
-                    <div class="guide-item">
-                        <h3>2. مقام المريد (صفاء القصد)</h3>
-                        <p class="guide-desc">تتولد فيه الإرادة الحقيقية التي تطلب الله لذاته لا لغرض سواه. يبدأ فيه المريد بتذوق حلاوة الذكر وتنكشف له بعض آفات نفسه الخفية، فيعمل على تطهير باطنه بنور الصلاة على النبي ﷺ والاشتغال بالباطن أكثر من الظاهر.</p>
-                        <div class="guide-rules"><span class="rule-chip">النقاط: 100</span><span class="rule-chip">التهليل: 50,000</span><span class="rule-chip">الأدنى: 1,000</span></div>
-                        <span class="guide-section-title">📘 عبادات ضرورية:</span>
-                        <div class="essential-box">الإستغفار 200، الصلاة على النبي 200، النوافل: ركعتي الضحى، القرآن 2 أحزاب، الباقيات الصالحات بعد الصلاة.</div>
-                        <span class="guide-section-title">✨ موجبات الترقي:</span>
-                        <div class="pos-list">حضور القلب التام، كثرة الصلاة على النبي بصدق، غض البصر، وحب الخير لعموم الخلق.</div>
-                        <span class="guide-section-title">⚠️ موانع الترقي:</span>
-                        <div class="neg-list">الرياء الخفي، حب الظهور والمديح، الإعجاب بالنفس، ومجالسة أهل الغفلة.</div>
-                    </div>
-                </div>
-
-                <div class="rank-section">
-                    <div class="guide-item">
-                        <h3>3. مقام السالك (مجاهدة الباطن)</h3>
-                        <p class="guide-desc">هو مقام الجد والعمل الدؤوب، حيث يصبح الورد هو الغذاء الحقيقي للروح. يشتد فيه الثبات وتظهر فيه ثمار الصبر والرضا التام عن الله في كل حال، وتذوب فيه النفس الأمارة في نور المجاهدة المستمرة والمراقبة.</p>
-                        <div class="guide-rules"><span class="rule-chip">النقاط: 300</span><span class="rule-chip">التهليل: 150,000</span><span class="rule-chip">الأدنى: 1,000</span></div>
-                        <span class="guide-section-title">📘 عبادات ضرورية:</span>
-                        <div class="essential-box">الإستغفار 400، الصلاة على النبي 300، النوافل الفجر، القرآن 2 أحزاب.</div>
-                        <span class="guide-section-title">✨ موجبات الترقي:</span>
-                        <div class="pos-list">الصبر على الطاعة، الرضا الكامل بالمقدور، قيام الليل، والتوكل الذي لا يهتز.</div>
-                        <span class="guide-section-title">⚠️ موانع الترقي:</span>
-                        <div class="neg-list">الشكوى لغير الله، الغضب للنفس، حب الجاه والمال، والتقصير في الورد لأي سبب.</div>
-                    </div>
-                </div>
-
-                <div class="rank-section">
-                    <div class="guide-item">
-                        <h3>4. مقام المحب (الفناء في المحبوب)</h3>
-                        <p class="guide-desc">أرقى المقامات، حيث يمتلئ القلب بشوق لا يهدأ ووجد لا ينقطع. يغيب المحب عن نفسه بشهود جمال ربه، ويصبح ذكره صمتاً وفكره ذكراً. هو مقام القرب الذي لا تشوبه شائبة، ومقام التسليم المطلق لله.</p>
-                        <div class="guide-rules"><span class="rule-chip">النقاط: 600</span><span class="rule-chip">التهليل: 500,000</span><span class="rule-chip">الأدنى: 1,700</span></div>
-                        <span class="guide-section-title">📘 عبادات ضرورية:</span>
-                        <div class="essential-box">الإستغار 600، الصلاة على النبي 400، النوافل قيام ليل خفيف، القرآن 3 أحزاب.</div>
-                        <span class="guide-section-title">✨ موجبات الترقي:</span>
-                        <div class="pos-list">الأنس بالخلوة مع الله، الفرح الدائم بالله، شدة الأدب مع الحق والخلق، والتوكل المطلق.</div>
-                        <span class="guide-section-title">⚠️ موانع الترقي:</span>
-                        <div class="neg-list">بقاء حب الدنيا في القلب، إفشاء الأسرار الإلهية، ملاحظة النفس، وفتور الهمة.</div>
-                    </div>
-                </div>
-
-                <div class="rank-section">
-                    <div class="guide-item">
-                        <h3>5. مقام الذاكر</h3>
-                        <p class="guide-desc">في هذا مقام يصبح اللسان رطباً بذكر الله في كل حين، وتنتقل حقيقة الذكر من اللسان إلى القلب حتى يفيض على الجوارح، فيصير العبد كأنه يرى الله في كل حركة وسكون.</p>
-                        <div class="guide-rules"><span class="rule-chip">النقاط: 1000</span><span class="rule-chip">التهليل: 1,000,000</span><span class="rule-chip">الأدنى: 2,500</span></div>
-                        <span class="guide-section-title">📘 عبادات ضرورية:</span>
-                        <div class="essential-box">الإستغفار 800، الصلاة على النبي 500، النوافل الرواتب (12 ركعة)، القرآن 3 أحزاب.</div>
-                        <span class="guide-section-title">✨ موجبات الترقي:</span>
-                        <div class="pos-list">دوام الذكر القلبي، المراقبة، التواضع، ومساعدة الآخرين سراً.</div>
-                        <span class="guide-section-title">⚠️ موانع الترقي:</span>
-                        <div class="neg-list">الغفلة بعد الذكر، العجب بالعمل، والتدخل فيما لا يعني.</div>
-                    </div>
-                </div>
-
-                <div class="rank-section">
-                    <div class="guide-item">
-                        <h3>6. مقام القانت</h3>
-                        <p class="guide-desc">هو مقام طول القيام والخشوع لله، حيث يستقر العبد في عبودية دائمة. يتميز بالخضوع التام والسكون تحت مجاري الأقدار، مع فيض من الأنوار القلبية والسكينة الربانية.</p>
-                        <div class="guide-rules"><span class="rule-chip">النقاط: 2000</span><span class="rule-chip">التهليل: 2,500,000</span><span class="rule-chip">الأدنى: 5,000</span></div>
-                        <span class="guide-section-title">📘 عبادات ضرورية:</span>
-                        <div class="essential-box">الإستغفار 900، الصلاة على النبي 600، النوافل قيام ليل السنة، القرآن 4 أحزاب.</div>
-                        <span class="guide-section-title">✨ موجبات الترقي:</span>
-                        <div class="pos-list">الإخلاص المحض، طول القنوت، كتمان الحال، والزهد في مدح الخلق.</div>
-                        <span class="guide-section-title">⚠️ موانع الترقي:</span>
-                        <div class="neg-list">رؤية النفس في الطاعة، الفتور في القيام، وضعف اليقين.</div>
-                    </div>
-                </div>
-
-                <div class="rank-section">
-                    <div class="guide-item">
-                        <h3>7. مقام الرباني</h3>
-                        <p class="guide-desc">أعلى مراتب التحقق، حيث يصبح العبد ربانياً بما علم وعمل وعلّم. هو مقام الشهود الدائم والاصطناع للحق، حيث يكون الله سمعه وبصره، وتظهر عليه آثار الولاية الكبرى بصدق القول وصفاء السر.</p>
-                        <div class="guide-rules"><span class="rule-chip">النقاط: 5000</span><span class="rule-chip">التهليل: 10,000,000</span><span class="rule-chip">الأدنى: 10,000</span></div>
-                        <span class="guide-section-title">📘 عبادات ضرورية:</span>
-                        <div class="essential-box">الإستغفار 1000، الصلاة على النبي 1000، النوافل: البرنامج كاملا، القرآن 5 أحزاب، صيام الإثنين و الخميس.</div>
-                        <span class="guide-section-title">✨ موجبات الترقي:</span>
-                        <div class="pos-list">التحقق بعبودية المحض، الإرشاد بلسان الحال، والرحمة الواسعة بالخلق.</div>
-                        <span class="guide-section-title">⚠️ موانع الترقي:</span>
-                        <div class="neg-list">ملاحظة الكرامة، الوقوف عند العطاء، والاشتغال بغير الله طرفة عين.</div>
-                    </div>
-                </div>
-                
-                <button class="close-guide-btn" onclick="toggleGuide(false)">فهمت والتزمت</button>
             </div>
+
+            <div class="rank-section">
+                <div class="guide-item" data-rank="1">
+                    <div class="lock-message">أكمل مقام الذي قبله لتفتح القفل</div>
+                    <div class="guide-blur-container">
+                        <h3>2. مقام المريد (صفاء القصد)</h3>
+                        <div class="guide-body">
+                            <p class="guide-desc">تتولد فيه الإرادة الحقيقية التي تطلب الله لذاته لا لغرض سواه. يبدأ فيه المريد بتذوق حلاوة الذكر وتنكشف له بعض آفات نفسه الخفية، فيعمل على تطهير باطنه بنور الصلاة على النبي ﷺ والاشتغال بالباطن أكثر من الظاهر.</p>
+                            <div class="guide-rules"><span class="rule-chip">النقاط: 100</span><span class="rule-chip">التهليل: 50,000</span><span class="rule-chip">الأدنى: 1,000</span></div>
+                            <span class="guide-section-title">📘 عبادات ضرورية:</span>
+                            <div class="essential-box">الإستغفار 200، الصلاة على النبي 200، النوافل: ركعتي الضحى، القرآن 2 أحزاب، الباقيات الصالحات بعد الصلاة.</div>
+                            <span class="guide-section-title">✨ موجبات الترقي:</span>
+                            <div class="pos-list">حضور القلب التام، كثرة الصلاة على النبي بصدق، غض البصر، وحب الخير لعموم الخلق.</div>
+                            <span class="guide-section-title">⚠️ موانع الترقي:</span>
+                            <div class="neg-list">الرياء الخفي، حب الظهور والمديح، الإعجاب بالنفس، ومجالسة أهل الغفلة.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rank-section">
+                <div class="guide-item" data-rank="2">
+                    <div class="lock-message">أكمل مقام الذي قبله لتفتح القفل</div>
+                    <div class="guide-blur-container">
+                        <h3>3. مقام السالك (مجاهدة الباطن)</h3>
+                        <div class="guide-body">
+                            <p class="guide-desc">هو مقام الجد والعمل الدؤوب، حيث يصبح الورد هو الغذاء الحقيقي للروح. يشتد فيه الثبات وتظهر فيه ثمار الصبر والرضا التام عن الله في كل حال، وتذوب فيه النفس الأمارة في نور المجاهدة المستمرة والمراقبة.</p>
+                            <div class="guide-rules"><span class="rule-chip">النقاط: 300</span><span class="rule-chip">التهليل: 150,000</span><span class="rule-chip">الأدنى: 1,000</span></div>
+                            <span class="guide-section-title">📘 عبادات ضرورية:</span>
+                            <div class="essential-box">الإستغفار 400، الصلاة على النبي 300، النوافل الفجر، القرآن 2 أحزاب.</div>
+                            <span class="guide-section-title">✨ موجبات الترقي:</span>
+                            <div class="pos-list">الصبر على الطاعة، الرضا الكامل بالمقدور، قيام الليل، والتوكل الذي لا يهتز.</div>
+                            <span class="guide-section-title">⚠️ موانع الترقي:</span>
+                            <div class="neg-list">الشكوى لغير الله، الغضب للنفس، حب الجاه والمال، والتقصير في الورد لأي سبب.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rank-section">
+                <div class="guide-item" data-rank="3">
+                    <div class="lock-message">أكمل مقام الذي قبله لتفتح القفل</div>
+                    <div class="guide-blur-container">
+                        <h3>4. مقام المحب (الفناء في المحبوب)</h3>
+                        <div class="guide-body">
+                            <p class="guide-desc">أرقى المقامات، حيث يمتلئ القلب بشوق لا يهدأ ووجد لا ينقطع. يغيب المحب عن نفسه بشهود جمال ربه، ويصبح ذكره صمتاً وفكره ذكراً. هو مقام القرب الذي لا تشوبه شائبة، ومقام التسليم المطلق لله.</p>
+                            <div class="guide-rules"><span class="rule-chip">النقاط: 600</span><span class="rule-chip">التهليل: 500,000</span><span class="rule-chip">الأدنى: 1,700</span></div>
+                            <span class="guide-section-title">📘 عبادات ضرورية:</span>
+                            <div class="essential-box">الإستغار 600، الصلاة على النبي 400، النوافل قيام ليل خفيف، القرآن 3 أحزاب.</div>
+                            <span class="guide-section-title">✨ موجبات الترقي:</span>
+                            <div class="pos-list">الأنس بالخلوة مع الله، الفرح الدائم بالله، شدة الأدب مع الحق والخلق، والتوكل المطلق.</div>
+                            <span class="guide-section-title">⚠️ موانع الترقي:</span>
+                            <div class="neg-list">بقاء حب الدنيا في القلب، إفشاء الأسرار الإلهية، ملاحظة النفس، وفتور الهمة.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rank-section">
+                <div class="guide-item" data-rank="4">
+                    <div class="lock-message">أكمل مقام الذي قبله لتفتح القفل</div>
+                    <div class="guide-blur-container">
+                        <h3>5. مقام الذاكر</h3>
+                        <div class="guide-body">
+                            <p class="guide-desc">في هذا مقام يصبح اللسان رطباً بذكر الله في كل حين، وتنتقل حقيقة الذكر من اللسان إلى القلب حتى يفيض على الجوارح، فيصير العبد كأنه يرى الله في كل حركة وسكون.</p>
+                            <div class="guide-rules"><span class="rule-chip">النقاط: 1000</span><span class="rule-chip">التهليل: 1,000,000</span><span class="rule-chip">الأدنى: 2,500</span></div>
+                            <span class="guide-section-title">📘 عبادات ضرورية:</span>
+                            <div class="essential-box">الإستغفار 800، الصلاة على النبي 500، النوافل الرواتب (12 ركعة)، القرآن 3 أحزاب.</div>
+                            <span class="guide-section-title">✨ موجبات الترقي:</span>
+                            <div class="pos-list">دوام الذكر القلبي، المراقبة، التواضع، ومساعدة الآخرين سراً.</div>
+                            <span class="guide-section-title">⚠️ موانع الترقي:</span>
+                            <div class="neg-list">الغفلة بعد الذكر، العجب بالعمل، والتدخل فيما لا يعني.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rank-section">
+                <div class="guide-item" data-rank="5">
+                    <div class="lock-message">أكمل مقام الذي قبله لتفتح القفل</div>
+                    <div class="guide-blur-container">
+                        <h3>6. مقام القانت</h3>
+                        <div class="guide-body">
+                            <p class="guide-desc">هو مقام طول القيام والخشوع لله، حيث يستقر العبد في عبودية دائمة. يتميز بالخضوع التام والسكون تحت مجاري الأقدار، مع فيض من الأنوار القلبية والسكينة الربانية.</p>
+                            <div class="guide-rules"><span class="rule-chip">النقاط: 2000</span><span class="rule-chip">التهليل: 2,500,000</span><span class="rule-chip">الأدنى: 5,000</span></div>
+                            <span class="guide-section-title">📘 عبادات ضرورية:</span>
+                            <div class="essential-box">الإستغفار 900، الصلاة على النبي 600، النوافل قيام ليل السنة، القرآن 4 أحزاب.</div>
+                            <span class="guide-section-title">✨ موجبات الترقي:</span>
+                            <div class="pos-list">الإخلاص المحض، طول القنوت، كتمان الحال، والزهد في مدح الخلق.</div>
+                            <span class="guide-section-title">⚠️ موانع الترقي:</span>
+                            <div class="neg-list">رؤية النفس في الطاعة، الفتور في القيام، وضعف اليقين.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rank-section">
+                <div class="guide-item" data-rank="6">
+                    <div class="lock-message">أكمل مقام الذي قبله لتفتح القفل</div>
+                    <div class="guide-blur-container">
+                        <h3>7. مقام الرباني</h3>
+                        <div class="guide-body">
+                            <p class="guide-desc">أعلى مراتب التحقق، حيث يصبح العبد ربانياً بما علم وعمل وعلّم. هو مقام الشهود الدائم والاصطناع للحق، حيث يكون الله سمعه وبصره، وتظهر عليه آثار الولاية الكبرى بصدق القول وصفاء السر.</p>
+                            <div class="guide-rules"><span class="rule-chip">النقاط: 5000</span><span class="rule-chip">التهليل: 10,000,000</span><span class="rule-chip">الأدنى: 10,000</span></div>
+                            <span class="guide-section-title">📘 عبادات ضرورية:</span>
+                            <div class="essential-box">الإستغفار 1000، الصلاة على النبي 1000، النوافل: البرنامج كاملا، القرآن 5 أحزاب، صيام الإثنين و الخميس.</div>
+                            <span class="guide-section-title">✨ موجبات الترقي:</span>
+                            <div class="pos-list">التحقق بعبودية المحض، الإرشاد بلسان الحال، والرحمة الواسعة بالخلق.</div>
+                            <span class="guide-section-title">⚠️ موانع الترقي:</span>
+                            <div class="neg-list">ملاحظة الكرامة، الوقوف عند العطاء، والاشتغال بغير الله طرفة عين.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="close-guide-btn" onclick="toggleGuide(false)">فهمت والتزمت  </button>
         </div>
     </div>
 
@@ -380,16 +385,33 @@
             else { 
                 clearInterval(timerInterval); 
                 const now = Date.now();
-                if (now <= endTime) { missionStars[currentNum - 1] = true; updateStarDisplay(); }
+                if (now <= endTime) {
+                    missionStars[currentNum - 1] = true;
+                    updateStarDisplay();
+                }
                 document.getElementById('dot-' + currentNum).classList.add('completed'); 
                 party(1); 
-                if (currentNum < 7) { setTimeout(() => initMission(currentNum + 1), 800); } 
-                else { party(3, 1500); checkDailyReset(); if (state.today < 2) { if (state.total < ranks[state.rankIdx].goal) { state.filled.push(state.total); state.total++; state.today++; save(); } } document.getElementById('khatm-trigger-btn').style.display = 'inline-block'; } 
+                if (currentNum < 7) {
+                    setTimeout(() => initMission(currentNum + 1), 800);
+                } else { 
+                    party(3, 1500); 
+                    checkDailyReset();
+                    if (state.today < 2) { 
+                        if (state.total < ranks[state.rankIdx].goal) { 
+                            state.filled.push(state.total); 
+                            state.total++; 
+                            state.today++; 
+                            save(); 
+                        } 
+                    }
+                    document.getElementById('khatm-trigger-btn').style.display = 'inline-block';
+                } 
             }
         }
 
-        function showKhatm() { document.getElementById('khatm-modal').style.display = 'flex'; }
-        function closeKhatm() { document.getElementById('khatm-modal').style.display = 'none'; showDashboard(); }
+        function showKhatm() {
+            document.getElementById('khatm-modal').style.display = 'flex';
+        }
 
         function updateStarDisplay() {
             const starContainer = document.getElementById('star-display');
@@ -397,11 +419,17 @@
             missionStars.forEach((isWon, index) => {
                 const starItem = document.createElement('div');
                 starItem.className = 'star-item';
-                if (isWon) { starItem.innerText = (index + 1); starItem.style.visibility = "visible"; } 
-                else { starItem.style.visibility = "hidden"; }
+                if (isWon) {
+                    starItem.innerText = (index + 1);
+                    starItem.style.visibility = "visible";
+                } else {
+                    starItem.style.visibility = "hidden";
+                }
                 starContainer.appendChild(starItem);
             });
         }
+
+        function closeKhatm() { document.getElementById('khatm-modal').style.display = 'none'; showDashboard(); }
 
         function updateTimer() {
             const now = Date.now();
@@ -433,7 +461,11 @@
             checkDailyReset();
             document.getElementById('start-screen').style.display = 'none'; document.getElementById('main-header').style.display = 'none'; document.getElementById('dhikr-container').style.display = 'none'; document.getElementById('dashboard-view').style.display = 'flex';
             let r = ranks[state.rankIdx];
-            if (state.total >= r.goal && state.totalTehlil >= r.tehlilReq && state.rankIdx < 6) { state.rankIdx++; party(5); save(); }
+            if (state.total >= r.goal && state.totalTehlil >= r.tehlilReq && state.rankIdx < 6) {
+                state.rankIdx++;
+                party(5);
+                save();
+            }
             renderGrid();
         }
 
@@ -447,25 +479,65 @@
             document.getElementById('accumulated-tehlil').innerText = state.totalTehlil.toLocaleString();
             const prog = Math.min((state.todayTehlil / r.dailyMin) * 100, 100); 
             const inner = document.getElementById('prog-inner'); 
-            inner.style.width = prog + '%'; inner.style.backgroundColor = prog >= 100 ? '#2ecc71' : '#e74c3c';
-            const grid = document.getElementById('grid-container'); grid.innerHTML = '';
+            inner.style.width = prog + '%'; 
+            inner.style.backgroundColor = prog >= 100 ? '#2ecc71' : '#e74c3c';
+            const grid = document.getElementById('grid-container'); 
+            grid.innerHTML = '';
             for (let i = 0; i < Math.min(r.goal, 100); i++) {
                 const sq = document.createElement('div'); 
                 sq.className = 'square' + (state.filled.includes(i) ? ' filled' : ''); 
                 if (state.filled.includes(i)) sq.style.backgroundColor = r.color; 
+                
+                // إضافة النقطة عن طريق النقر المزدوج
                 sq.ondblclick = () => { if (!state.filled.includes(i)) { state.filled.push(i); state.total++; save(); renderGrid(); party(1); } };
+                
+                // خاصية المسح عن طريق الضغطة المطولة (Long Press)
+                let timer;
+                const startPress = () => {
+                    timer = setTimeout(() => {
+                        if (state.filled.includes(i)) {
+                            state.filled = state.filled.filter(n => n !== i);
+                            state.total--;
+                            save();
+                            renderGrid();
+                        }
+                    }, 800); // 800 مللي ثانية لاعتبارها ضغطة مطولة
+                };
+                const cancelPress = () => clearTimeout(timer);
+
+                sq.onmousedown = startPress;
+                sq.ontouchstart = (e) => { e.preventDefault(); startPress(); };
+                sq.onmouseup = cancelPress;
+                sq.onmouseleave = cancelPress;
+                sq.ontouchend = cancelPress;
+                
                 grid.appendChild(sq); 
             }
         }
 
         function addManualTehlil() { const val = parseInt(document.getElementById('tehlil-input').value); if (val > 0) { state.totalTehlil += val; state.todayTehlil += val; save(); renderGrid(); document.getElementById('tehlil-input').value = ''; } }
-        function toggleGuide(show) { document.getElementById('guide-modal').style.display = show ? 'flex' : 'none'; }
+        
+        function toggleGuide(show) { 
+            const modal = document.getElementById('guide-modal');
+            if (show) {
+                document.querySelectorAll('.guide-item').forEach(item => {
+                    const rankId = parseInt(item.dataset.rank);
+                    if (rankId !== state.rankIdx) { item.classList.add('locked'); } 
+                    else { item.classList.remove('locked'); }
+                });
+                modal.style.display = 'flex';
+            } else { modal.style.display = 'none'; }
+        }
         
         function getManualHijri() {
             const months = ["محرم", "صفر", "ربيع الأول", "ربيع الثاني", "جمادى الأولى", "جمادى الآخرة", "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة"];
-            const today = new Date(); const referenceDate = new Date("2026-01-02"); const diffDays = Math.floor((today - referenceDate) / (1000 * 60 * 60 * 24));
-            let day = 12 + diffDays; let monthIdx = 6; let year = 1447; 
+            const today = new Date(); 
+            const referenceDate = new Date("2026-01-02"); 
+            const diffDays = Math.floor((today - referenceDate) / (1000 * 60 * 60 * 24));
+            let day = 12 + diffDays; 
+            let monthIdx = 6; let year = 1447; 
             while (day > 30) { day -= 30; monthIdx++; if (monthIdx > 11) { monthIdx = 0; year++; } }
+            while (day < 1) { day += 30; monthIdx--; if (monthIdx < 0) { monthIdx = 11; year--; } }
             return `${day} ${months[monthIdx]} ${year} هـ`;
         }
 
@@ -477,15 +549,4 @@
             document.getElementById('start-miladi').innerText = miladi; 
             document.getElementById('h-miladi').innerText = miladi; 
             document.getElementById('start-hijri').innerText = hijri; 
-            document.getElementById('h-hijri').innerText = hijri;
-        };
-
-        document.getElementById('real-start-btn').onclick = () => { 
-            document.getElementById('start-screen').style.display = 'none'; 
-            document.getElementById('main-header').style.display = 'block'; 
-            document.getElementById('dhikr-container').style.display = 'block'; 
-            initMission(1); 
-        };
-    </script>
-</body>
-</html>
+            document.getElementById('h-hij
